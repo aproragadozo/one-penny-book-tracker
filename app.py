@@ -6,10 +6,6 @@ from flask_marshmallow import Marshmallow
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
-
-@app.route('/')
-def home():
-    return jsonify(message="Hello World!"), 200
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'test.db')
 
 db = SQLAlchemy(app)
@@ -35,6 +31,12 @@ def db_seed():
     db.session.add(test_user)
     db.session.commit()
     print("database seeded")
+
+# routes
+
+@app.route('/')
+def home():
+    return jsonify(message="Hello World!"), 200
 
 @app.route('/not_found')
 def not_found():
@@ -62,6 +64,29 @@ def books():
     book_list = Book.query.all()
     result = books_schema.dump(book_list)
     return jsonify(result)
+
+@app.route('/users', methods=["GET"])
+def users():
+    user_list = User.query.all()
+    result = users_schema.dump(user_list)
+    return jsonify(result)
+
+@app.route("/register", methods=["POST"])
+def register():
+    email = request.form["email"]
+    # see if user already exists
+    test = User.query.filter_by(email=email).first()
+    if test:
+        return jsonify(message="That email already exists."), 409
+        # add new user
+    else:
+        first_name = request.form["first_name"]
+        last_name = request.form["last_name"]
+        password = request.form["password"]
+        user = User(first_name=first_name, last_name=last_name, email=email, password=password)
+        db.session.add(user)
+        db.session.commit()
+        return jsonify(message="User created successfully"), 201
 
 
 # database models
