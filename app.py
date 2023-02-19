@@ -5,6 +5,7 @@ import os
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 from flask_mail import Mail, Message
+from scraper import get_price
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -127,6 +128,28 @@ def retrieve_password(email:str):
         return jsonify(message="Password sent to " + email)
     else:
         return jsonify(message="That email doesn't exist."), 401
+
+@app.route("/book_details/<int:book_id>", methods=["GET"])
+def book_details(book_id:int):
+    book = Book.query.filter_by(book_id=book_id).first()
+    if book:
+        result = book_schema.dump(book)
+        return jsonify(result)
+    else:
+        return jsonify(message="That book doesn't exist in the database.")
+
+@app.route("/add_book", methods=["POST"])
+def add_book():
+    isbn = request.form["isbn"]
+    # see if book already exists
+    test = Book.query.filter_by(isbn=isbn).first()
+    if test:
+        return jsonify(message="This book is already part of the database."), 409
+    else:
+        new_book = Book(title=request.form["title"], author=request.form["author"], isbn=isbn, price=get_price(f"https://amazon.co.uk/dp/{isbn}"))
+        db.session.add(new_book)
+        db.session.commit()
+        return jsonify(message="New book record created."), 201
 
 
 # database models
