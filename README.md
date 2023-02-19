@@ -4,6 +4,6 @@ Beginnings of web app to monitor the price of books on amazon, and notify users 
 Using Flask and SQLAlchemy and Marshmallow so far for the backend.
 
 JWT for user authentication.
-Basic Flask-Mail config for sending forgotten passwords.
+Basic Flask-Mail config for sending email.
 
-No frontend yet - expected to be based on scraping Amazon product pages instead of going through their API as it's constantly changing and requires user to be an amazon retailertehmeslves for access.
+No frontend yet - expected to be based on regularly scraping Amazon product pages for items added to user database (or look at user's amazon wishlist in an advanced iteration), and send email when minimum listed price drops below preset.
