@@ -164,11 +164,11 @@ class User(db.Model):
 
 class Book(db.Model):
     __tablename__ = 'books'
-    book_id = Column(Integer, primary_key=True)
+    book_id = Column(Integer, primary_key=True, unique=True)
     title = Column(String)
     author = Column(String)
-    isbn = Column(String, unique=True)
-    price = Column(Float)
+    current_lowest_price = Column(Float)
+    link = Column(String)
 
 # marshmallow classes
 class UserSchema(ma.Schema):
@@ -177,7 +177,7 @@ class UserSchema(ma.Schema):
 
 class BookSchema(ma.Schema):
     class Meta:
-        fields= ("title", "author", "isbn", "price")
+        fields= ("book_id", "title", "author", "current_lowest_price", "link")
 
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
