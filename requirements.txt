@@ -20,7 +20,7 @@ marshmallow==3.21.3
 marshmallow-sqlalchemy==1.0.0
 mysql==0.0.3
 mysql-connector-python==9.0.0
-mysqlclient==2.2.4
+mysqlclient==2.1.1
 packaging==24.1
 PyJWT==2.9.0
 requests==2.32.3
