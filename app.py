@@ -52,7 +52,7 @@ def db_seed():
 @app.route('/')
 def home():
     #return jsonify(message="Hello World!"), 200
-    render_template("index.html")
+    return render_template("index.html")
 
 @app.route('/not_found')
 def not_found():
