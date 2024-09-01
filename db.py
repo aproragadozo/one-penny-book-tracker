@@ -2,6 +2,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, Integer, Float
 from os import getenv
+import pymysql
+
+pymsql.version_info = (1,4,3, "final", 0)
+pymysql.install_as_MySQLdb()
 
 engine = create_engine(f'mysql+mysqlconnector://{getenv("DB_USER")}:{getenv("DB_PASSWORD")}.@{getenv("DB_HOST")}/{"DB_NAME"}')
 
