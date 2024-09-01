@@ -55,5 +55,6 @@ def create_new_book(url, session):
 # price = float(dom.xpath('//span[@class="olp-from"]/following::text()')[0].strip()[1:])
 # print(price)
 
-for item in wish_list:
-    create_new_book(item, session)
+def run():
+    for item in wish_list:
+        create_new_book(item, session)

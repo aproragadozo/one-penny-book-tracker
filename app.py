@@ -5,7 +5,7 @@ import os
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 from flask_mail import Mail, Message
-from scraper import get_price
+from scraper import get_price, run
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -151,6 +151,12 @@ def add_book():
         db.session.add(new_book)
         db.session.commit()
         return jsonify(message="New book record created."), 201
+
+
+# trigger scraper
+@app.route("/trigger", methods=["GET", "POST"])
+def trigger_scraper():
+    run()
 
 
 # database models
