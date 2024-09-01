@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Float
 import os
@@ -51,7 +51,8 @@ def db_seed():
 
 @app.route('/')
 def home():
-    return jsonify(message="Hello World!"), 200
+    #return jsonify(message="Hello World!"), 200
+    render_template("index.html")
 
 @app.route('/not_found')
 def not_found():
