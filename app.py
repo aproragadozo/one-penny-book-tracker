@@ -61,7 +61,8 @@ def db_seed():
 @app.route('/')
 def home():
     #return jsonify(message="Hello World!"), 200
-    return render_template("index.html")
+    books = Book.query.all()
+    return render_template("index.html", books=books)
 
 @app.route('/not_found')
 def not_found():

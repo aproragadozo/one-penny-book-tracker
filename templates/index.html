@@ -1,19 +1,22 @@
 <div class="book-row" style="display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #ddd;">
-    <!-- Book Cover -->
-    <div class="book-cover" style="flex: 0 0 100px; margin-right: 15px;">
-      <img src="cover-url.jpg" alt="Book Cover" style="width: 100%; height: auto; border-radius: 5px;">
-    </div>
-  
-    <!-- Book Details -->
-    <div class="book-details" style="flex: 1; display: flex; flex-direction: column;">
-      <div class="book-title" style="font-size: 18px; font-weight: bold; margin-bottom: 5px;">Book Title</div>
-      <div class="book-author" style="font-size: 14px; color: #555; margin-bottom: 10px;">by Author Name</div>
-    </div>
-  
-    <!-- Price and Link -->
-    <div class="book-price-link" style="flex: 0 0 150px; text-align: right;">
-      <div class="book-price" style="font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #d9534f;">$12.99</div>
-      <a href="marketplace-url" target="_blank" style="font-size: 14px; color: #007bff; text-decoration: none;">View on Marketplace</a>
-    </div>
+  {% for book in books %}
+  <!--<div class="book-cover" style="flex: 0 0 100px; margin-right: 15px;">
+    <img src="cover-url.jpg" alt="Book Cover" style="width: 100%; height: auto; border-radius: 5px;">
+  </div>-->
+
+  <!-- Book Details -->
+  <div class="book-details" style="flex: 1; display: flex; flex-direction: column;">
+    <div class="book-title" style="font-size: 18px; font-weight: bold; margin-bottom: 5px;">{{ book.title }}</div>
+    <div class="book-author" style="font-size: 14px; color: #555; margin-bottom: 10px;">by {{ book.author }}</div>
+  </div>
+
+  <!-- Price and Link -->
+  <div class="book-price-link" style="flex: 0 0 150px; text-align: right;">
+    <div class="book-price" style="font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #d9534f;">${{ book.current_lowest_price }}</div>
+    <a href="{{ book.link }}" target="_blank" style="font-size: 14px; color: #007bff; text-decoration: none;">View on Marketplace</a>
+  </div>
+  {% else %}
+  "No books found"
+  {% endfor %}
   </div>
   
