@@ -5,7 +5,7 @@ from lxml import etree as et
 import time
 import random
 import csv
-# from app import db, Book
+from app import db, Book
 # from db import engine, Book
 
 
