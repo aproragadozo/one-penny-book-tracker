@@ -5,6 +5,7 @@ import os
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 from flask_mail import Mail, Message
+import re
 # this is causing a circular import, and probably won't be needed
 # from scraper import get_price, run
 
@@ -12,7 +13,10 @@ app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 # connecting to postgres instead of sqlite
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'test.db')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
+# replacing postgres with postgresql with postgres in vercel's postgres url variable
+db_url = re.sub(pattern="^postgres$", repl="postgresql", string=os.environ.get('POSTGRES_URL'))
+# using the new replaced uri
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = "super-secret" # change this and store with gitguardian
 #using mailtrap.io for now; basically Postman for email
