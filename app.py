@@ -14,7 +14,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'test.db')
 # replacing postgres with postgresql with postgres in vercel's postgres url variable
 db_url = re.sub(pattern=r'postgres', repl="postgresql", string=os.environ.get('POSTGRES_URL'))
-print(db_url)
 # using the new replaced uri
 app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -61,7 +60,7 @@ def db_seed():
 def home():
     #return jsonify(message="Hello World!"), 200
     run()
-    booksies = Book.query.all()
+    booksies = books.query.all()
     return render_template("index.html", books=booksies)
 
 @app.route('/not_found')
@@ -191,7 +190,7 @@ class Book(db.Model):
 # create the books table
 with app.app_context():
     db.create_all()
-# marshmallow classes
+""" # marshmallow classes
 class UserSchema(ma.Schema):
     class Meta:
         fields = ("id", "first_name", "last_name", "email", "password")
@@ -204,7 +203,7 @@ user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
 book_schema = BookSchema()
-books_schema = BookSchema(many=True)
+books_schema = BookSchema(many=True) """
 
 if __name__ == '__main__':
     app.run(debug=True)
