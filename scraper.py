@@ -5,7 +5,8 @@ from lxml import etree as et
 import time
 import random
 import csv
-from db import engine, Book
+from app import db, Book
+# from db import engine, Book
 
 
 header = {
@@ -41,11 +42,11 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 # add row
-def create_new_book(url, session):
-    preis = get_price(url)
-    new_book = Book(title="Alma", author="Barack", link=url, current_lowest_price=preis)
-    session.add(new_book)
-    session.commit()
+def create_new_book(preis, url, title="Alma", author="Barack"):
+    # preis = get_price(url)
+    new_book = Book(title=title, author=author, link=url, current_lowest_price=preis)
+    db.session.add(new_book)
+    db.session.commit()
 
 
 
@@ -57,4 +58,5 @@ def create_new_book(url, session):
 
 def run():
     for item in wish_list:
-        create_new_book(item, session)
+        preis = get_price(item)
+        create_new_book(preis, item)

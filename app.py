@@ -5,7 +5,8 @@ import os
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 from flask_mail import Mail, Message
-from scraper import get_price, run
+# this is causing a circular import, and probably won't be needed
+# from scraper import get_price, run
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
