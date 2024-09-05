@@ -6,7 +6,7 @@ from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 from flask_mail import Mail, Message
 import re
-from scraper import get_price, run
+from scraper import wish_list, get_price
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -190,6 +190,21 @@ class Book(db.Model):
 # create the books table
 with app.app_context():
     db.create_all()
+
+    # add row
+def create_new_book(preis, url, title="Alma", author="Barack"):
+    # preis = get_price(url)
+    new_book = Book(title=title, author=author, link=url, current_lowest_price=preis)
+    db.session.add(new_book)
+    db.session.commit()
+
+# price = float(dom.xpath('//span[@class="olp-from"]/following::text()')[0].strip()[1:])
+# print(price)
+
+def run():
+    for item in wish_list:
+        preis = get_price(item)
+        create_new_book(preis, item)
 """ # marshmallow classes
 class UserSchema(ma.Schema):
     class Meta:

@@ -5,8 +5,9 @@ from lxml import etree as et
 import time
 import random
 import csv
-from app import db, Book
+# from app import db, Book
 # from db import engine, Book
+
 
 
 header = {
@@ -41,17 +42,4 @@ def get_price(url):
 """ Session = sessionmaker(bind=engine)
 session = Session() """
 
-# add row
-def create_new_book(preis, url, title="Alma", author="Barack"):
-    # preis = get_price(url)
-    new_book = Book(title=title, author=author, link=url, current_lowest_price=preis)
-    db.session.add(new_book)
-    db.session.commit()
 
-# price = float(dom.xpath('//span[@class="olp-from"]/following::text()')[0].strip()[1:])
-# print(price)
-
-def run():
-    for item in wish_list:
-        preis = get_price(item)
-        create_new_book(preis, item)
