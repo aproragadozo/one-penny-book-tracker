@@ -6,8 +6,7 @@ from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 from flask_mail import Mail, Message
 import re
-# this is causing a circular import, and probably won't be needed
-# from scraper import get_price, run
+from scraper import get_price, run
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -61,8 +60,9 @@ def db_seed():
 @app.route('/')
 def home():
     #return jsonify(message="Hello World!"), 200
-    books = Book.query.all()
-    return render_template("index.html", books=books)
+    run()
+    booksies = Book.query.all()
+    return render_template("index.html", books=booksies)
 
 @app.route('/not_found')
 def not_found():
