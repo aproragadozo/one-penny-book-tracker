@@ -15,6 +15,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'test.db')
 # replacing postgres with postgresql with postgres in vercel's postgres url variable
 db_url = re.sub(pattern="^postgres$", repl="postgresql", string=os.environ.get('POSTGRES_URL'))
+print(db_url)
 # using the new replaced uri
 app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
