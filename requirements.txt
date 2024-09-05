@@ -19,6 +19,7 @@ MarkupSafe==2.1.5
 marshmallow==3.22.0
 marshmallow-sqlalchemy==1.1.0
 packaging==24.1
+psycopg2==2.9.9
 PyJWT==2.9.0
 requests==2.32.3
 soupsieve==2.6
