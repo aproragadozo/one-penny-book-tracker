@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS books;
+
+CREATE TABLE books (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    current_lowest_price INTEGER NOT NULL,
+    link TEXT NOT NULL
+);

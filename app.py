@@ -9,7 +9,10 @@ from scraper import get_price, run
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'test.db')
+# connecting to postgres instead of sqlite
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'test.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = "super-secret" # change this and store with gitguardian
 #using mailtrap.io for now; basically Postman for email
 app.config["MAIL_SERVER"] = "sandbox.smtp.mailtrap.io"
@@ -160,22 +163,27 @@ def trigger_scraper():
 
 
 # database models
-class User(db.Model):
-    __tablename__ = "users"
-    id = Column(Integer, primary_key=True)
-    first_name = Column(String)
-    last_name = Column(String)
-    email = Column(String, unique=True)
-    password = Column(String)
+# commenting User out for now
+# class User(db.Model):
+#     __tablename__ = "users"
+#     id = Column(Integer, primary_key=True)
+#     first_name = Column(String)
+#     last_name = Column(String)
+#     email = Column(String, unique=True)
+#     password = Column(String)
 
+# postgres model
 class Book(db.Model):
     __tablename__ = 'books'
-    book_id = Column(Integer, primary_key=True, unique=True)
-    title = Column(String)
-    author = Column(String)
-    current_lowest_price = Column(Float)
-    link = Column(String)
+    book_id = db.Column(db.Integer, primary_key=True, unique=True)
+    title = db.Column(db.String(200), nullable=False)
+    author = db.Column(db.String(100), nullable=False)
+    current_lowest_price = db.Column(db.Float, nullable=False)
+    link = db.Column(db.String(500), nullable=False)
 
+# create the books table
+with app.app_context():
+    db.create_all()
 # marshmallow classes
 class UserSchema(ma.Schema):
     class Meta:
@@ -192,4 +200,4 @@ book_schema = BookSchema()
 books_schema = BookSchema(many=True)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
