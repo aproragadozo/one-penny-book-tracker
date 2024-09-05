@@ -38,8 +38,8 @@ def get_price(url):
     #return [float(price.strip()[1:]) for price in prices if price != ""]
     return min(float_prices)
 
-Session = sessionmaker(bind=engine)
-session = Session()
+""" Session = sessionmaker(bind=engine)
+session = Session() """
 
 # add row
 def create_new_book(preis, url, title="Alma", author="Barack"):
