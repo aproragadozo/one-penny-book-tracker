@@ -29,6 +29,10 @@ def get_price(url):
     # strip the pound signs and convert prices to floats for comparison
     #float_prices = [float(price.strip()[1:]) for price in prices]
     #return min(float_prices)
+    # the error seemed to be that min() was called on an empty item, but the xpath expression seems to work
+    # so trying if returning the element directly works
+    if type(prices) is not list:
+        return float(prices.strip()[1:])
     float_prices = []
     for price in prices:
         try:
