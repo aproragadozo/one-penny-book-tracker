@@ -1,5 +1,6 @@
 import requests
 from sqlalchemy.orm import sessionmaker
+import html5lib
 from bs4 import BeautifulSoup
 from lxml import etree as et
 import re
@@ -23,7 +24,7 @@ wish_list = ["https://www.amazon.co.uk/dp/0091958482",
 
 def get_price(url):
     response = requests.get(url, headers=header)
-    soup = BeautifulSoup(response.content, "html.parser")
+    soup = BeautifulSoup(response.content, 'html5lib')
     dom = et.HTML(str(soup))
     from_price = soup.find("span", class_="a-size-base olp-link aod-popover-caret-link")
     label = from_price.get("aria-label")
@@ -55,3 +56,4 @@ def get_price(url):
 """ Session = sessionmaker(bind=engine)
 session = Session() """
 
+print(get_price(wish_list[0]))
