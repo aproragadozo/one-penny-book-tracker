@@ -32,8 +32,6 @@ def get_price(url):
     # the error seemed to be that min() was called on an empty item, but the xpath expression seems to work
     # so trying if returning the element directly works
     if isinstance(prices, list):
-        return float(prices.strip()[1:])
-    else:
         float_prices = []
         for price in prices:
             try:
@@ -43,6 +41,8 @@ def get_price(url):
                 continue
         #return [float(price.strip()[1:]) for price in prices if price != ""]
         return min(float_prices)
+    else:
+     return float(prices.strip()[1:])
 
 """ Session = sessionmaker(bind=engine)
 session = Session() """
