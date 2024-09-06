@@ -26,7 +26,7 @@ def get_price(url):
     soup = BeautifulSoup(response.content, "html.parser")
     dom = et.HTML(str(soup))
     from_price = soup.find("span", class_="a-size-base olp-link aod-popover-caret-link")
-    label = from_price["aria-label"]
+    label = from_price.get("aria-label")
     price = re.search("£(.*)+", label)
     return float(price.group().strip()[1:])
     # returns all prices that are indicated on page as "from"
