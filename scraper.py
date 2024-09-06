@@ -36,6 +36,7 @@ def get_price(url):
         for price in prices:
             try:
                 if float(price.strip()[1:]) != 0.0:
+                    print(price.strip()[1:])
                     float_prices.append(float(price.strip()[1:]))
             except:
                 continue
